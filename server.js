@@ -26,9 +26,14 @@ if (!fs.existsSync(feedbackFile)) fs.writeFileSync(feedbackFile, JSON.stringify(
  * 🏠 GET / - Serves the main Mess Portal page natively
  */
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Mess.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
-
+// 📊 GET all students
+app.get('/students', (req, res) => {
+    const data = fs.readFileSync(studentsFile, 'utf8');
+    const students = JSON.parse(data || "[]");
+    res.json(students);
+});
 /**
  * 📝 POST /register - Handles new student registrations
  */
