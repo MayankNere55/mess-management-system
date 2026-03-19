@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Management System</title>
+    <link rel="stylesheet" href="mess.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-aurora"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-brand">Mess<span>Portal</span></div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#info">Information</a>
+            <a href="#dashboard-section">Dashboard</a>
+            <a href="#menu">Menu</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#register">Register</a>
+        </div>
+    </nav>
+
+    <!-- HEADER / HERO -->
+    <header id="home" class="hero">
+        <h1>Mess Management System</h1>
+        <p>Your comprehensive portal to view the daily food menu, register for the mess, and provide valuable feedback online.</p>
+    </header>
+
+    <main class="container">
+        <!-- STATS SECTION -->
+        <section class="stats-section reveal">
+            <div class="stat-box">
+                <h3>1,254</h3>
+                <p>Total Students</p>
+            </div>
+            <div class="stat-box">
+                <h3>4</h3>
+                <p>Meals Daily</p>
+            </div>
+            <div class="stat-box">
+                <h3>4.8/5</h3>
+                <p>Average Rating</p>
+            </div>
+        </section>
+
+        <!-- INFO SECTION (Timings & Fees) -->
+        <section id="info" class="reveal">
+            <h2>Timings & Fee Structure</h2>
+            <div class="dashboard-cards" style="margin-top: 0;">
+                <div class="dash-card">
+                    <h3 style="border-bottom: 1px solid var(--glass-border); margin-bottom: 1rem; padding-bottom: 0.5rem; color: var(--accent);">🕒 Mess Timings</h3>
+                    <p><strong>Breakfast:</strong> 07:30 AM - 09:30 AM</p>
+                    <p><strong>Lunch:</strong> 12:30 PM - 02:30 PM</p>
+                    <p><strong>Evening Snacks:</strong> 05:00 PM - 06:00 PM</p>
+                    <p><strong>Dinner:</strong> 07:30 PM - 09:30 PM</p>
+                </div>
+                <div class="dash-card">
+                    <h3 style="border-bottom: 1px solid var(--glass-border); margin-bottom: 1rem; padding-bottom: 0.5rem; color: var(--accent);">💳 Monthly Fee Structure</h3>
+                    <p><strong>Boys Hostel:</strong> ₹3,000 / month</p>
+                    <p><strong>Girls Hostel:</strong> ₹2,800 / month</p>
+                    <p><strong>Tiffin Delivery:</strong> +₹500 / month</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">* Fees automatically calculate during registration.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN & DASHBOARD SECTION -->
+        <section id="dashboard-section" class="reveal">
+            <!-- Login View -->
+            <div id="login-view">
+                <div class="login-tabs">
+                    <button type="button" class="btn-primary login-tab-btn" id="tab-student" onclick="switchLoginTab('student')">Student Login</button>
+                    <button type="button" class="btn-secondary login-tab-btn" id="tab-admin" onclick="switchLoginTab('admin')">Management Login</button>
+                </div>
+
+                <div id="student-login-form-container">
+                    <h2>Student Portal</h2>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-id">Student Login ID</label>
+                            <input type="text" id="login-id" placeholder="Enter your first name (e.g., Ram)" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                        </div>
+                        <button type="button" class="btn-primary" onclick="handleLogin('student')">Log In to Dashboard</button>
+                    </form>
+                </div>
+
+                <div id="admin-login-form-container" class="hidden">
+                    <h2>Management Portal</h2>
+                    <form id="admin-login-form">
+                        <div class="form-group">
+                            <label for="admin-login-id">Admin ID</label>
+                            <input type="text" id="admin-login-id" placeholder="Enter admin ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-password">Admin Password</label>
+                            <input type="password" id="admin-password" placeholder="Enter admin password" required>
+                        </div>
+                        <button type="button" class="btn-primary" onclick="handleLogin('admin')">Access Management Dashboard</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Dashboard View (Hidden by default) -->
+            <div id="dashboard-view" class="hidden">
+                <h2 id="welcome-message">Welcome back, Student!</h2>
+                
+                <div class="dashboard-cards">
+                    <div class="dash-card">
+                        <h3>Profile Info</h3>
+                        <p><strong>Name:</strong> <span id="dash-name">Alex Sharma</span></p>
+                        <p><strong>Roll No:</strong> <span id="dash-roll">CS2024001</span></p>
+                        <p><strong>Branch:</strong> <span id="dash-branch">Computer Science</span></p>
+                        <p><strong>Gender:</strong> <span id="dash-gender">Not specified</span></p>
+                        <p><strong>Mess Type:</strong> <span id="dash-messtype">Non-Veg</span></p>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Subscription Details</h3>
+                        <p><strong>Fee Paid:</strong> <span id="dash-fee">₹0</span></p>
+                        <p><strong>Tiffin Delivery:</strong> <span id="dash-tiffin">No</span></p>
+                        <p><strong>Delivery Address:</strong> <span id="dash-address">N/A</span></p>
+                        <p><strong>Billing Month:</strong> <span id="dash-month">N/A</span></p>
+                    </div>
+                    <div class="dash-card highlight-card">
+                        <h3 class="days-left">Active</h3>
+                        <p>Subscription Status</p>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-secondary" onclick="handleLogout()">Logout</button>
+            </div>
+
+            <!-- Management View (Hidden by default) -->
+            <div id="management-view" class="hidden">
+                <h2>Admin Management Dashboard</h2>
+                <div class="dashboard-cards">
+                    <div class="dash-card">
+                        <h3>Total Students</h3>
+                        <p class="days-left admin-total-text" id="admin-total">0</p>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Gender Split</h3>
+                        <p><strong>Boys:</strong> <span id="admin-boys">0</span></p>
+                        <p><strong>Girls:</strong> <span id="admin-girls">0</span></p>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Subscriptions</h3>
+                        <p><strong>Tiffin Active:</strong> <span id="admin-tiffin">0</span></p>
+                        <p><strong>Total Fees:</strong> <span id="admin-fees" class="admin-fees-text">₹0</span></p>
+                    </div>
+                </div>
+
+                <div class="admin-table-container">
+                    <h3>All Students Record</h3>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Roll No</th>
+                                    <th>Branch</th>
+                                    <th>Gender</th>
+                                    <th>Mess Type</th>
+                                    <th>Tiffin</th>
+                                    <th>Fee Processed</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button type="button" class="btn-secondary" onclick="handleLogout()">Logout</button>
+            </div>
+        </section>
+
+        <!-- Edit Student Modal -->
+        <div id="edit-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h3>Edit Student Details</h3>
+                <form id="edit-form" onsubmit="saveStudent(event)">
+                    <input type="hidden" id="edit-id">
+                    <div class="form-group">
+                        <label for="edit-name">Name</label>
+                        <input type="text" id="edit-name" placeholder="Student name" title="Student name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-roll">Roll No</label>
+                        <input type="text" id="edit-roll" placeholder="Roll number" title="Roll number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-gender">Gender</label>
+                        <select id="edit-gender" title="Select Gender" aria-label="Gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-messtype">Mess Type</label>
+                        <input type="text" id="edit-messtype" placeholder="Mess Type" title="Mess Type">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-tiffin">Tiffin Delivery</label>
+                        <select id="edit-tiffin" title="Tiffin Delivery" aria-label="Tiffin Delivery">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-fee">Processed Fee</label>
+                        <input type="text" id="edit-fee" placeholder="Total Processed Fee" title="Processed Fee">
+                    </div>
+                    <div class="form-actions modal-actions">
+                        <button type="submit" class="btn-primary modal-btn">Save Changes</button>
+                        <button type="button" class="btn-secondary modal-btn" onclick="closeEditModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MENU SECTION -->
+        <section id="menu" class="reveal">
+            <h2>Weekly Mess Menu</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1589301760014-d929f39ce9b1');">
+                        <div class="menu-day">Monday</div>
+                    </div>
+                    <div class="menu-details">
+                        <p><strong>Breakfast:</strong> Poha, Tea</p>
+                        <p><strong>Lunch:</strong> Rice, Dal, Sabji</p>
+                        <p><strong>Dinner:</strong> Roti, Paneer</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec');">
+                        <div class="menu-day">Tuesday</div>
+                    </div>
+                    <div class="menu-details">
+                        <p><strong>Breakfast:</strong> Upma</p>
+                        <p><strong>Lunch:</strong> Chapati, Dal</p>
+                        <p><strong>Dinner:</strong> Rice, Chicken Curry</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d');">
+                        <div class="menu-day">Wednesday</div>
+                    </div>
+                    <div class="menu-details">
+                        <p><strong>Breakfast:</strong> Bread Butter</p>
+                        <p><strong>Lunch:</strong> Rice, Rajma</p>
+                        <p><strong>Dinner:</strong> Roti, Mix Veg</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1621252178306-6df797b5e4c0');">
+                        <div class="menu-day">Thursday</div>
+                    </div>
+                    <div class="menu-details">
+                        <p><strong>Breakfast:</strong> Idli</p>
+                        <p><strong>Lunch:</strong> Chapati, Dal Fry</p>
+                        <p><strong>Dinner:</strong> Rice, Egg Curry</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1565557623262-b51c2513a641');">
+                        <div class="menu-day">Friday</div>
+                    </div>
+                    <div class="menu-details">
+                        <p><strong>Breakfast:</strong> Paratha</p>
+                        <p><strong>Lunch:</strong> Rice, Chole</p>
+                        <p><strong>Dinner:</strong> Roti, Paneer</p>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1668236543090-82eba5ee5976');">
+                        <div class="menu-day">Saturday</div>
+                    </div>
+                    <div class="menu-details">
+                        <p><strong>Breakfast:</strong> Dosa</p>
+                        <p><strong>Lunch:</strong> Rice, Sambar</p>
+                        <p><strong>Dinner:</strong> Roti, Veg Curry</p>
+                    </div>
+                </div>
+                <div class="menu-card" style="grid-column: 1 / -1;">
+                    <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1631452180519-c014f3316211'); height: 250px;">
+                        <div class="menu-day" style="font-size: 2rem;">Sunday Special!</div>
+                    </div>
+                    <div class="menu-details" style="flex-direction: row; justify-content: space-around; text-align: center;">
+                        <p><strong>Breakfast:</strong> Puri Bhaji</p>
+                        <p><strong>Lunch:</strong> Special Grand Thali</p>
+                        <p><strong>Dinner:</strong> Special Biryani Dinner</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY SECTION -->
+        <section id="gallery" class="reveal">
+            <h2>Mess & Campus Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1" alt="Students Eating">
+                    <div class="overlay"><span>Students Enjoying Meals</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b" alt="Mess Room">
+                    <div class="overlay"><span>Our Clean Dining Hall</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c" alt="Staff Cooking">
+                    <div class="overlay"><span>Professional Kitchen Staff</span></div>
+                </div>
+                <div class="gallery-item wide">
+                    <img src="https://images.unsplash.com/photo-1555244162-803834f87a4d" alt="Delicious Food">
+                    <div class="overlay"><span>Premium Quality Servings</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REGISTRATION FORM -->
+        <section id="register" class="reveal">
+            <h2>New Registration</h2>
+            <form id="register-form" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="roll">Roll Number</label>
+                    <input type="text" id="roll" placeholder="E.g. CS2024001" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="branch">Branch</label>
+                    <input type="text" id="branch" placeholder="E.g. Computer Science">
+                </div>
+
+                <!-- Gender used for Base Fee calculation -->
+                <div class="form-group">
+                    <label>Gender (Determines Base Fee)</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="male" onchange="calculateFee()" required> Boys Hostel (₹3,000)</label>
+                        <label><input type="radio" name="gender" value="female" onchange="calculateFee()" required> Girls Hostel (₹2,800)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Mess Type</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="messtype" value="veg"> Veg</label>
+                        <label><input type="checkbox" name="messtype" value="nonveg"> Non-Veg</label>
+                    </div>
+                </div>
+
+                <!-- Tiffin Delivery Option -->
+                <div class="form-group" style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 10px; border: 1px solid var(--glass-border);">
+                    <label style="color: var(--accent); font-size: 1.1rem;">Need Tiffin / Room Delivery Service?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="tiffin" value="yes" onchange="toggleAddress(); calculateFee()"> Yes (+₹500 / mo)</label>
+                        <label><input type="radio" name="tiffin" value="no" onchange="toggleAddress(); calculateFee()" checked> No (Dine In)</label>
+                    </div>
+                </div>
+
+                <!-- Hidden Address Field -->
+                <div class="form-group hidden" id="address-group" style="margin-top: -0.5rem; padding-bottom: 1rem;">
+                    <label for="address">Delivery Address (Hostel / Room No.)</label>
+                    <textarea id="address" rows="2" placeholder="E.g. Room 104, Block B"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="month">Select Month</label>
+                    <input type="month" id="month" required>
+                </div>
+
+                <!-- Live Estimated Fee Box -->
+                <div class="form-group" style="background: rgba(255, 65, 108, 0.1); padding: 1.5rem; border-radius: 10px; border: 1px dashed var(--accent); margin-top: 1rem; text-align: center;">
+                    <h3 style="color: var(--text-main); font-size: 1.4rem;">Estimated Monthly Fee: <span id="calc-fee" style="color: var(--accent);">₹0</span></h3>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Complete Secure Registration</button>
+            </form>
+        </section>
+        
+        <!-- STUDENT REVIEWS SECTION -->
+        <section id="reviews" class="reveal">
+            <h2>Student Reviews</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The food quality has really improved, and the new non-veg options are amazing! The payment portal is also seamless."</p>
+                    <h4>- Priya M. (ECE)</h4>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★☆</div>
+                    <p>"Hygiene is well-maintained and Sunday special meals are the best part of the week. Highly recommend."</p>
+                    <h4>- Rahul K. (CS)</h4>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Very easy to register and pay. The feedback system actually works and the administration responds promptly!"</p>
+                    <h4>- Ananya S. (ME)</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEEDBACK SECTION -->
+        <section id="feedback" class="reveal">
+            <h2>Submit Feedback</h2>
+            <form id="feedback-form" onsubmit="handleFeedback(event)">
+                <div class="form-group">
+                    <label for="fname">Name (Optional)</label>
+                    <input type="text" id="fname" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="rating">Rate Food Quality</label>
+                    <select id="rating" required>
+                        <option value="" disabled selected>Select a rating...</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Average">Average</option>
+                        <option value="Poor">Poor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea id="comments" rows="5" placeholder="Share your experience or suggestions..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Feedback</button>
+            </form>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="reveal">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <strong>Email</strong> 
+                    <span>mess@college.com</span>
+                </div>
+                <div class="contact-card">
+                    <strong>Phone</strong> 
+                    <span>+91 9876543210</span>
+                </div>
+                <div class="contact-card">
+                    <strong>Address</strong> 
+                    <span>College Campus, India</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2026 Mess Management System. Built for students.</p>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Premium Interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
+            const reveals = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+            
+            reveals.forEach(reveal => revealObserver.observe(reveal));
+            
+            // Mouse tracking for premium hover glow effect on cards
+            document.querySelectorAll('.dash-card, .menu-card').forEach(card => {
+                card.onmousemove = e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                };
+            });
+        });
+
+        function switchLoginTab(tab) {
+            const studentContainer = document.getElementById('student-login-form-container');
+            const adminContainer = document.getElementById('admin-login-form-container');
+            const studentTabBtn = document.getElementById('tab-student');
+            const adminTabBtn = document.getElementById('tab-admin');
+
+            if (tab === 'student') {
+                studentContainer.classList.remove('hidden');
+                adminContainer.classList.add('hidden');
+                
+                studentTabBtn.className = 'btn-primary';
+                adminTabBtn.className = 'btn-secondary';
+            } else {
+                studentContainer.classList.add('hidden');
+                adminContainer.classList.remove('hidden');
+                
+                adminTabBtn.className = 'btn-primary';
+                studentTabBtn.className = 'btn-secondary';
+            }
+        }
+
+        async function handleLogin(type = 'student') {
+            const isStudent = type === 'student';
+            const loginIdInput = isStudent ? document.getElementById('login-id') : document.getElementById('admin-login-id');
+            const passwordInput = isStudent ? document.getElementById('password') : document.getElementById('admin-password');
+            
+            const loginId = loginIdInput.value;
+            const password = passwordInput.value;
+            
+            if(!loginId || !password) {
+                alert("Please enter both your Login ID and Password.");
+                return;
+            }
+
+            const loginBtn = isStudent ? document.querySelector('#login-form button') : document.querySelector('#admin-login-form button');
+            const originalText = loginBtn.innerText;
+            loginBtn.innerText = "Logging in...";
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ loginId, password })
+                });
+                
+                const result = await response.json();
+
+                if (response.ok) {
+                    if (result.role === 'admin') {
+                        renderAdminDashboard(result.students);
+                        document.getElementById('login-view').classList.add('hidden');
+                        document.getElementById('management-view').classList.remove('hidden');
+                        document.getElementById('password').value = '';
+                        return;
+                    }
+
+                    const student = result.student;
+                    
+                    // Update dashboard UI
+                    document.getElementById('dash-roll').innerText = student.roll || 'N/A';
+                    document.getElementById('dash-name').innerText = student.name || "Student";
+                    document.getElementById('dash-branch').innerText = student.branch || 'N/A';
+                    document.getElementById('dash-gender').innerText = student.gender || 'Not specified';
+                    document.getElementById('dash-messtype').innerText = student.messType || 'Not specified';
+                    document.getElementById('dash-fee').innerText = student.totalCalculatedFee || '₹0';
+                    document.getElementById('dash-tiffin').innerText = student.tiffinDelivery === 'yes' ? 'Yes' : 'No';
+                    document.getElementById('dash-address').innerText = student.deliveryAddress || 'N/A';
+                    document.getElementById('dash-month').innerText = student.billingMonth || 'N/A';
+                    
+                    document.getElementById('welcome-message').innerText = "Welcome back, " + (student.name ? student.name.split(' ')[0] : student.loginId) + "!";
+                    
+                    document.getElementById('login-view').classList.add('hidden');
+                    document.getElementById('dashboard-view').classList.remove('hidden');
+                    
+                    document.getElementById('password').value = '';
+                    document.getElementById('admin-password').value = '';
+                } else {
+                    alert("❌ " + result.message);
+                }
+            } catch (error) {
+                console.error('Error logging in:', error);
+                alert("⚠️ Could not connect to backend server!\nMake sure 'node server.js' is running.");
+            } finally {
+                loginBtn.innerText = originalText;
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('management-view').classList.add('hidden');
+            document.getElementById('login-view').classList.remove('hidden');
+            // reset form passwords
+            document.getElementById('password').value = '';
+            document.getElementById('admin-password').value = '';
+        }
+
+        // ADMIN LOGIC
+        let allStudentsData = [];
+        
+        function renderAdminDashboard(students) {
+            allStudentsData = students;
+            const tbody = document.getElementById('admin-tbody');
+            tbody.innerHTML = '';
+            
+            let totalStudents = students.length;
+            let boys = 0, girls = 0, tiffinCount = 0;
+            let totalFees = 0;
+
+            students.forEach(s => {
+                if(s.gender === 'male') boys++;
+                if(s.gender === 'female') girls++;
+                if(s.tiffinDelivery === 'yes') tiffinCount++;
+                
+                // Parse fee string like "₹3500" or just numbers
+                const feeInt = parseInt((s.totalCalculatedFee || "0").replace(/[^0-9]/g, '')) || 0;
+                totalFees += feeInt;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${s.name || '-'}</td>
+                    <td>${s.roll || '-'}</td>
+                    <td>${s.branch || '-'}</td>
+                    <td style="text-transform: capitalize;">${s.gender || '-'}</td>
+                    <td>${s.messType || '-'}</td>
+                    <td>${s.tiffinDelivery === 'yes' ? 'Yes' : 'No'}</td>
+                    <td>${s.totalCalculatedFee || '₹0'}</td>
+                    <td><button type="button" class="btn-secondary" style="margin:0; padding:0.4rem 0.8rem; font-size:0.9rem;" onclick="openEditModal('${s.id}')">Edit</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('admin-total').innerText = totalStudents;
+            document.getElementById('admin-boys').innerText = boys;
+            document.getElementById('admin-girls').innerText = girls;
+            document.getElementById('admin-tiffin').innerText = tiffinCount;
+            document.getElementById('admin-fees').innerText = "₹" + totalFees;
+        }
+
+        function openEditModal(id) {
+            const s = allStudentsData.find(st => st.id === id);
+            if(!s) return;
+            
+            document.getElementById('edit-id').value = s.id;
+            document.getElementById('edit-name').value = s.name || '';
+            document.getElementById('edit-roll').value = s.roll || '';
+            document.getElementById('edit-gender').value = s.gender || 'male';
+            document.getElementById('edit-messtype').value = s.messType || '';
+            document.getElementById('edit-tiffin').value = s.tiffinDelivery || 'no';
+            document.getElementById('edit-fee').value = s.totalCalculatedFee || '';
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+        }
+
+        async function saveStudent(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button[type="submit"]');
+            const original = btn.innerText;
+            btn.innerText = "Saving...";
+            
+            const updatedStudent = {
+                id: document.getElementById('edit-id').value,
+                name: document.getElementById('edit-name').value,
+                roll: document.getElementById('edit-roll').value,
+                gender: document.getElementById('edit-gender').value,
+                messType: document.getElementById('edit-messtype').value,
+                tiffinDelivery: document.getElementById('edit-tiffin').value,
+                totalCalculatedFee: document.getElementById('edit-fee').value
+            };
+
+            try {
+                const response = await fetch('/update-student', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedStudent)
+                });
+                
+                const result = await response.json();
+                if(response.ok) {
+                    alert("✅ " + result.message);
+                    renderAdminDashboard(result.students); // refresh list
+                    closeEditModal();
+                } else {
+                    alert("❌ " + result.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("⚠️ Error saving to backend.");
+            } finally {
+                btn.innerText = original;
+            }
+        }
+
+        // DYNAMIC FORM LOGIC (Tiffin Address & Price Calculation)
+        function toggleAddress() {
+            const tiffinYes = document.querySelector('input[name="tiffin"][value="yes"]').checked;
+            const addressGroup = document.getElementById('address-group');
+            const addressInput = document.getElementById('address');
+            
+            if (tiffinYes) {
+                addressGroup.classList.remove('hidden');
+                addressInput.setAttribute('required', 'true');
+            } else {
+                addressGroup.classList.add('hidden');
+                addressInput.removeAttribute('required');
+                addressInput.value = ''; // clear when hidden
+            }
+        }
+
+        function calculateFee() {
+            const gender = document.querySelector('input[name="gender"]:checked')?.value;
+            const tiffinYes = document.querySelector('input[name="tiffin"][value="yes"]').checked;
+            
+            let total = 0;
+            // Base fees based on gender
+            if (gender === 'male') total += 3000;
+            else if (gender === 'female') total += 2800;
+
+            // Add Tiffin delivery surcharge
+            if (tiffinYes && gender) { 
+                total += 500;
+            }
+
+            // Update UI
+            document.getElementById('calc-fee').innerText = total > 0 ? "₹" + total : "₹0";
+        }
+
+        // FORM SUBMISSION TO BACKEND
+        async function handleRegistration(event) {
+            event.preventDefault(); 
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Processing Details...";
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                roll: document.getElementById('roll').value,
+                branch: document.getElementById('branch').value,
+                gender: document.querySelector('input[name="gender"]:checked')?.value || 'Not specified',
+                messType: Array.from(document.querySelectorAll('input[name="messtype"]:checked')).map(cb => cb.value).join(', '),
+                tiffinDelivery: document.querySelector('input[name="tiffin"]:checked')?.value || 'no',
+                deliveryAddress: document.getElementById('address').value,
+                billingMonth: document.getElementById('month').value,
+                totalCalculatedFee: document.getElementById('calc-fee').innerText
+            };
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert("✅ Registration successful!\n\n🔐 IMPORTANT: PLEASE SAVE YOUR CREDENTIALS!\nLogin ID: " + result.loginId + "\nPassword: " + result.password);
+                    event.target.reset();
+                    calculateFee(); // Reset fee display
+                    toggleAddress(); // Hide address field
+                } else {
+                    alert("❌ Error registering. Please try again.");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("⚠️ Could not connect to backend server!\nMake sure 'node server.js' is running.");
+            } finally {
+                submitBtn.innerText = originalText;
+            }
+        }
+
+        async function handleFeedback(event) {
+            event.preventDefault(); 
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Submitting...";
+            
+            const formData = {
+                fname: document.getElementById('fname').value,
+                rating: document.getElementById('rating').value,
+                comments: document.getElementById('comments').value
+            };
+
+            try {
+                const response = await fetch('/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert("✅ " + result.message);
+                    event.target.reset();
+                } else {
+                    alert("❌ Error submitting feedback.");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("⚠️ Could not connect to backend server!\nMake sure 'node server.js' is running.");
+            } finally {
+                submitBtn.innerText = originalText;
+            }
+        }
+    </script>
+</body>
+</html>

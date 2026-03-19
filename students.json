@@ -1,0 +1,56 @@
+[
+  {
+    "name": "parag",
+    "roll": "01",
+    "branch": "3244567",
+    "gender": "male",
+    "messType": "veg",
+    "tiffinDelivery": "no",
+    "deliveryAddress": "",
+    "billingMonth": "2222-03",
+    "totalCalculatedFee": "₹3000",
+    "id": "STU-1773911334073",
+    "registrationDate": "19/3/2026, 2:38:54 pm"
+  },
+  {
+    "name": "OM",
+    "roll": "1",
+    "branch": "it",
+    "gender": "male",
+    "messType": "veg, nonveg",
+    "tiffinDelivery": "yes",
+    "deliveryAddress": "24 nama",
+    "billingMonth": "0003-12",
+    "totalCalculatedFee": "₹3500",
+    "id": "STU-1773911604808",
+    "registrationDate": "19/3/2026, 2:43:24 pm"
+  },
+  {
+    "name": "abc",
+    "roll": "12",
+    "branch": "it",
+    "gender": "male",
+    "messType": "nonveg",
+    "tiffinDelivery": "no",
+    "deliveryAddress": "",
+    "billingMonth": "2026-03",
+    "totalCalculatedFee": "₹3000",
+    "id": "STU-1773911979650",
+    "registrationDate": "19/3/2026, 2:49:39 pm"
+  },
+  {
+    "name": "rohan",
+    "roll": "23",
+    "branch": "ai",
+    "gender": "male",
+    "messType": "veg",
+    "tiffinDelivery": "no",
+    "deliveryAddress": "",
+    "billingMonth": "2026-02",
+    "totalCalculatedFee": "₹3000",
+    "id": "STU-1773912289049",
+    "loginId": "rohan",
+    "password": "rohan@1234",
+    "registrationDate": "19/3/2026, 2:54:49 pm"
+  }
+]
